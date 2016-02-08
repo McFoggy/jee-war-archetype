@@ -29,7 +29,7 @@ public class RESTEchoServiceIT {
     @Deployment(testable=false)
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class)
-                .addPackages(true, "fr.brouillard.jee.echo")
+                .addPackages(true, "${package}")
                 .addClass(JaxrsStarter.class)
                 .addAsResource(EmptyAsset.INSTANCE, "META-INF/beans.xml")
                 ;
