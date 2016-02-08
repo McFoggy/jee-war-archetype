@@ -9,7 +9,8 @@
 
     <name>jee-war-archetype</name>
     <description>Creates jee ready to use webapp</description>
-
+    <url>http://oss.brouillard.fr/jee-war-archetype</url>
+    
     <organization>
         <name>Matthieu Brouillard</name>
         <url>http://oss.brouillard.fr</url>
@@ -18,11 +19,11 @@
     <scm>
         <connection>scm:git:https://github.com/McFoggy/jee-war-archetype.git</connection>
         <developerConnection>scm:git:https://github.com/McFoggy/jee-war-archetype.git</developerConnection>
-        <url>http://oss.brouillard.fr/jee-war-archetype</url>
+        <url>${project.url}</url>
         <tag>HEAD</tag>
     </scm>
 
-    <inceptionYear>2013</inceptionYear>
+    <inceptionYear>2016</inceptionYear>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
