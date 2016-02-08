@@ -1,7 +1,7 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-package fr.brouillard.jee;
+package ${package};
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
