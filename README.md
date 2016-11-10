@@ -5,6 +5,7 @@ Ready to use maven archetype generating jee compliant maven web project.
 ## Generated project content:
 
 - war based project
+- versioning using [jgitver](https://github.com/jgitver/jgitver-maven-plugin)
 - CDI enabled
 - JAX-RS activated
 - unit testing enabled:

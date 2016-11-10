@@ -4,7 +4,7 @@
 
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
-	<version>${version}</version>
+	<version>0</version>
 	<packaging>war</packaging>
 
 	<name>${artifactId}</name>
@@ -20,16 +20,17 @@
 		<arquillian.qualifier>managed</arquillian.qualifier>
 
 		<version.plugin.failsafe>2.19</version.plugin.failsafe>
-		<version.plugin.wildfly>1.1.0.Alpha4</version.plugin.wildfly>
+		<version.plugin.wildfly>1.1.0.Alpha11</version.plugin.wildfly>
+        <version.plugin.enforcer>1.4.1</version.plugin.enforcer>
+        <version.plugin.war>3.0.0</version.plugin.war>
 
-		<version.junit>4.12</version.junit>
-		<version.javaee>7.0</version.javaee>
-		<version.shrinkwrap>1.2.2</version.shrinkwrap>
-		<version.shrinkwrap.resolver>2.2.0</version.shrinkwrap.resolver>
-		<version.arquillian>1.1.9.Final</version.arquillian>
-		<version.arquillian.chameleon>1.0.0.Alpha6</version.arquillian.chameleon>
-		<version.arquillian.rest>1.0.0.Alpha3</version.arquillian.rest>
 		<version.slf4j>1.7.12</version.slf4j>
+		<version.javaee>7.0</version.javaee>
+        
+		<version.junit>4.12</version.junit>
+        <version.arquillian_universe>1.0.0.Alpha1</version.arquillian_universe>
+        <version.shrinkwrap>1.2.6</version.shrinkwrap>
+        <version.shrinkwrap.resolver>2.2.4</version.shrinkwrap.resolver>
 	</properties>
 
 	<build>
@@ -46,6 +47,32 @@
 		</pluginManagement>
 
 		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${version.plugin.war}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries />
+                            <addDefaultSpecificationEntries />
+                        </manifest>
+                        <manifestSections>
+                            <manifestSection>
+                                <name>SCM</name>
+                                <manifestEntries>
+                                    <git-commit>${jgitver.git_sha1_full}</git-commit>
+                                    <git-commit-short>${jgitver.git_sha1_8}</git-commit-short>
+                                    <git-branch>${jgitver.branch_name}</git-branch>
+                                    <git-commit-date>${jgitver.head_commit_datetime}</git-commit-date>
+                                    <git-committer>${jgitver.head_committer_name} [${jgitver.head_commiter_email}]</git-committer>
+                                    <git-dirty>${jgitver.dirty}</git-dirty>
+                                </manifestEntries>
+                            </manifestSection>
+                        </manifestSections>
+                    </archive>
+                </configuration>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -77,27 +104,27 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-bom</artifactId>
-				<version>${version.arquillian}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.shrinkwrap</groupId>
-				<artifactId>shrinkwrap-bom</artifactId>
-				<version>${version.shrinkwrap}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.shrinkwrap.resolver</groupId>
-				<artifactId>shrinkwrap-resolver-bom</artifactId>
-				<version>${version.shrinkwrap.resolver}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+            <dependency>
+                <groupId>org.arquillian</groupId>
+                <artifactId>arquillian-universe</artifactId>
+                <version>${version.arquillian_universe}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-bom</artifactId>
+                <version>${version.shrinkwrap}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                <artifactId>shrinkwrap-resolver-bom</artifactId>
+                <version>${version.shrinkwrap.resolver}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -122,29 +149,48 @@
 			<version>${version.junit}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.junit</groupId>
-			<artifactId>arquillian-junit-container</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.arquillian.container</groupId>
-			<artifactId>arquillian-container-chameleon</artifactId>
-			<version>${version.arquillian.chameleon}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.extension</groupId>
-			<artifactId>arquillian-rest-client-api</artifactId>
-			<version>${version.arquillian.rest}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.extension</groupId>
-			<artifactId>arquillian-rest-client-impl-3x</artifactId>
-			<version>${version.arquillian.rest}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-depchain</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-depchain</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-junit</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-junit-standalone</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-chameleon</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-rest-jaxrs2</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-rest-resteasy3</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<profiles>
@@ -154,5 +200,32 @@
 				<arquillian.qualifier>remote</arquillian.qualifier>
 			</properties>
 		</profile>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>${version.plugin.enforcer}</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-no-snapshots</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireReleaseDeps />
+                                        <requireReleaseVersion />
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 	</profiles>
 </project>
