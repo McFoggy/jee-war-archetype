@@ -15,3 +15,7 @@ Ready to use maven archetype generating jee compliant maven web project.
 ## Usage
 
 simply call `mvn archetype:generate -Dfilter=fr.brouillard.oss:jee-war-archetype` and follow instructions
+
+## Development
+
+use `mvn archetype:generate -DarchetypeCatalog=local` to use only archetypes built locally and thus avoid to retrieve remote versions 

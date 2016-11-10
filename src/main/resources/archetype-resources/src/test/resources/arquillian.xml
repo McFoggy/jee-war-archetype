@@ -8,13 +8,13 @@
 
 	<container qualifier="managed" default="true">
 		<configuration>
-			<property name="chameleonTarget">wildfly:10.0.0.CR4:managed</property>
+			<property name="chameleonTarget">wildfly:10.1.0.Final:managed</property>
 			<property name="serverConfig">standalone.xml</property>
 		</configuration>
 	</container>
 	<container qualifier="remote">
 		<configuration>
-			<property name="chameleonTarget">wildfly:10.0.0.CR4:remote</property>
+			<property name="chameleonTarget">wildfly:10.1.0.Final:remote</property>
 		</configuration>
 	</container>
 </arquillian>
