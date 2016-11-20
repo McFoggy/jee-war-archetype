@@ -16,6 +16,9 @@ Ready to use maven archetype generating jee compliant maven web project.
 
 simply call `mvn archetype:generate -Dfilter=fr.brouillard.oss:jee-war-archetype` and follow instructions
 
+In case the _central_ repository does not expose the good version of the archetype (latest is `7.0.1`) you can force the usage by running the following:  
+`mvn archetype:generate -DarchetypeArtifactId=jee-war-archetype -DarchetypeGroupId=fr.brouillard.oss -DarchetypeVersion=7.0.1 -DarchetypeRepository=https://repo1.maven.org/maven`
+
 ## Development
 
 use `mvn archetype:generate -DarchetypeCatalog=local` to use only archetypes built locally and thus avoid to retrieve remote versions
